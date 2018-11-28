@@ -1,0 +1,119 @@
+<html>
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/creative.css') }}">
+  <body style="background-color:#e9e7ea;">
+  <body>
+  <style>
+   h1 {
+    font-family: 'Times New Roman', Times, serif; 
+    font-size: 300%; 
+   } 
+  </style>
+  <body>
+    <h1  align="center" style="color:#3c1731;" >Вистави</h1>
+    <nav>
+         <h3> <a href = "{{ url_for('city') }}" style="color:#B2729E;"> Міста    
+         </a> | <a href = "{{ url_for('theater') }}" style="color:#B2729E;"> Театри  
+         </a> | <a href = "{{ url_for('genre') }}" style="color:#B2729E;"> Жанри 
+  
+         </a></h3>
+       </nav>
+    </td>  <h2 style="color:#502035" class="body">Додати виставу</h2>
+    <style>
+   .b1 {
+    background: #502035; 
+    color: #fbf8f8; 
+    font-size: 15px;
+    transition: opacity .8s .8s;
+    width: 80px;
+    height: 40px;
+        }
+    .b2 {
+    background:#6F5775; 
+    color: #fbf8f8; 
+    font-size: 15px;
+    transition: opacity .8s .8s;
+    width: 80px;
+    height: 40px;
+        }
+    .body { 
+    margin-left: 50px; /* Убираем отступы */
+   }
+    .body2 { 
+    margin-right: 100px; /* Убираем отступы */
+   }
+  </style>
+    <form method="POST" action="/performance">
+        
+        <input type="text" name="name" placeholder = "Назва" class="body" style="color:#502035">
+        <span class="input-group-addon" style="color:#502035">Час початку вистави</span>
+        <input type="time" id="times" name="times" min="9:00" max="18:00"  style="color:#502035" required placeholder = "Час">
+        <input type="number" name="price" min="1" style="color:#502035" placeholder = "Ціна"> 
+        <input type="text" name="description" style="color:#502035" placeholder = "Опис">
+        <input type="text" name="main_actors" style="color:#502035" placeholder = "Головні актори"> 
+        <span class="input-group-addon" style="color:#502035">Номер театру</span>
+        <select type="number" name="theater_id" class="selectpicker form-control" style="color:#502035">
+              {% for t in theaters_id %}
+              <option value="{{ t.id }}">{{ t.id }}</option>
+              {% endfor %}
+        </select>
+        <input type="submit" class="b1" value="Добавити" >
+   </form>
+      <form method="GET" action="/performance" class="body2">
+        <input type="text" name="search" placeholder = "Введіть текст"   size="15" style="color:#502035">
+        <input type="submit" class="Шукати" value="Пошук" size="25"  >
+       
+      </form>
+        
+<h2 style="color:#354C68"; >Вистави</h2>
+    <table border="2" bordercolor="#354C68" width="90%">
+      {% for performance in performances %}
+        <tr>
+          <td>
+            {{performance.id}}
+          </td>
+          <td>
+            {{performance.name}}
+          </td>
+          <td>
+            {{performance.times}}
+          </td>
+          <td>
+            {{performance.price}}
+          </td>
+          <td>
+            {{performance.description}}
+          </td>
+          <td>
+            {{performance.main_actors}}
+          </td>
+          <td>
+            {{performance.theater_id}} 
+          </td>
+          <td>
+            <form method="POST" action="./update_performance" style="display: inline">
+              <input type="hidden" value="{{performance.name}}" size="10" style="color:#502035" name="old_name">
+              <input type="text" value="{{performance.name}}" size="10" style="color:#502035" name="new_name">
+              <input type="hidden" value="{{performance.times}}" size="10" style="color:#502035" name="old_times">
+              <input type="text" value="{{performance.times}}" size="10" style="color:#502035" name="new_times">
+              <input type="hidden" value="{{performance.price}}" min="1" size="10" style="color:#502035" name="old_price">
+              <input type="text" value="{{performance.price}}" size="10" min="1" style="color:#502035" name="new_price">
+              <input type="hidden" value="{{performance.description}}" size="10" style="color:#502035" name="old_description">
+              <input type="text" value="{{performance.description}}" size="10" style="color:#502035" name="new_description">
+                <input type="hidden" value="{{performance.main_actors}}" size="10" style="color:#502035" name="old_main_actors">
+              <input type="text" value="{{performance.main_actors}}" size="10" style="color:#502035" name="new_main_actors">
+                <input type="hidden" value="{{performance.theater_id}}" size="10" style="color:#502035" name="old_theater_id">
+              <input type="text" value="{{performance.theater_id}}" size="10" style="color:#502035" name="new_theater_id">
+              <input type="submit" class="b2" value="Оновити">
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="./delete_performance" style="display: inline">
+              <input type="hidden" value="{{performance.id}}" name="id">
+              <input type="submit" class="b2" value="Видалити">
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

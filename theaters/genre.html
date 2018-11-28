@@ -1,0 +1,93 @@
+<html>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/creative.css') }}">
+  <body style="background-color:#e9e7ea;">
+  <body>
+   <style>
+   h1 {
+    font-family: 'Times New Roman', Times, serif; 
+    font-size: 300%; 
+   } 
+      
+  </style>
+    <h1 align="center" style="color:#3c1731;" > Жанри</h1>
+      </td>
+        <nav>
+         <h3> <a href = "{{ url_for('city') }}" style="color:#B2729E;"> Міста    
+         </a> | <a href = "{{ url_for('theater') }}" style="color:#B2729E;"> Театри  
+         </a> | <a href = "{{ url_for('performance') }}" style="color:#B2729E;"> Вистави  
+         </a></h3>
+       </nav>
+      
+      <h2 style="color:#502035" class="body">Добавити жанр</h2>
+    <style>
+   .b1 {
+    background: #502035; 
+    color: #fbf8f8; 
+    font-size: 15px;
+    transition: opacity .8s .8s;
+    width: 80px;
+    height: 40px;
+        }
+    .search {
+    background: #9C5D70; 
+    color: #fbf8f8; 
+    font-size: 15px;
+    transition: opacity .8s .8s;
+    width: 60px;
+    height: 40px;
+    }
+    .b2 {
+    background: #6F5775; 
+    color: #fbf8f8; 
+    font-size: 15px;
+    transition: opacity .8s .8s;
+    width: 80px;
+    height: 40px;
+        }
+   .body { 
+    margin-left: 50px; /* Убираем отступы */
+   }
+    .body2 { 
+    margin-right: 100px; /* Убираем отступы */
+   }
+  </style>
+      <form method="POST" action="/genre">
+        <input type="text" name="name" placeholder = "Назва жанру"  class="body" size="25" style="color:#502035">
+        <input type="submit" class="b1" value="Добавити" size="40"  >
+       
+      </form>
+      <form method="GET" action="/genre" class="body2">
+        <input type="text" name="search" placeholder = "Введіть текст"   size="15" style="color:#502035">
+        <input type="submit" class="Шукати" value="Пошук" size="25"  >
+       
+      </form>
+    <h2 style="color:#354C68;">Жанри</h2>
+    <table border="2" bordercolor="#354C68"  >
+      {% for genre in genres %}
+        <tr>
+          
+              <td>
+                {{genre.id}}
+              </td>
+              <td>
+                {{genre.name}}
+              </td>
+             <td>
+            <form method="POST" action="./update_genre" style="display: inline">
+              <input type="hidden" value="{{genre.name}}" size="25" style="color:#502035" name="old_name">
+              <input type="text" value="{{genre.name}}" size="25" style="color:#502035" name="new_name">
+              <input type="submit" class="b2" value="Обновити">
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="./delete_genre" style="display: inline">
+              <input type="hidden" value="{{genre.id}}" name="id">
+              <input type="submit" class="b2" value="Видалити">
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+        
+    </table>
+  </body>
+</html>

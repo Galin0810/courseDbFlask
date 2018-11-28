@@ -1,0 +1,93 @@
+<html>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/creative.css') }}">
+  <body style="background-color:#e9e7ea;">
+  <body>
+   <style>
+   h1 {
+    font-family: 'Times New Roman', Times, serif; 
+    font-size: 300%; 
+   } 
+      
+  </style>
+    <h1 align="center" style="color:#3c1731;" > Міста</h1>
+      </td>
+        <nav>
+         <h3> <a href = "{{ url_for('theater') }}" style="color:#B2729E;"> Театри    
+         </a> | <a href = "{{ url_for('performance') }}" style="color:#B2729E;"> Вистави  
+         </a> | <a href = "{{ url_for('genre') }}" style="color:#B2729E;"> Жанри  
+         </a></h3>
+       </nav>
+      
+      <h2 style="color:#502035" class="body">Добавити місто</h2>
+    <style>
+   .b1 {
+    background: #502035; 
+    color: #fbf8f8; 
+    font-size: 15px;
+    transition: opacity .8s .8s;
+    width: 80px;
+    height: 40px;
+        }
+    .search {
+    background: #9C5D70; 
+    color: #fbf8f8; 
+    font-size: 15px;
+    transition: opacity .8s .8s;
+    width: 60px;
+    height: 40px;
+    }
+    .b2 {
+    background: #6F5775; 
+    color: #fbf8f8; 
+    font-size: 15px;
+    transition: opacity .8s .8s;
+    width: 80px;
+    height: 40px;
+        }
+   .body { 
+    margin-left: 50px; /* Убираем отступы */
+   }
+    .body2 { 
+    margin-right: 100px; /* Убираем отступы */
+   }
+  </style>
+      <form method="POST" action="/city">
+        <input type="text" name="city" placeholder = "Назва міста"  class="body" size="25" style="color:#502035">
+        <input type="submit" class="b1" value="Добавити" size="40"  >
+       
+      </form>
+      <form method="GET" action="/city" class="body2">
+        <input type="text" name="search" placeholder = "Введіть текст"   size="15" style="color:#502035">
+        <input type="submit" class="Шукати" value="Пошук" size="25"  >
+       
+      </form>
+    <h2 style="color:#354C68;">Міста</h2>
+    <table border="2" bordercolor="#354C68"  >
+      {% for city in cities %}
+        <tr>
+          
+              <td>
+                {{city.id}}
+              </td>
+              <td>
+                {{city.city}}
+              </td>
+             <td>
+            <form method="POST" action="./update_city" style="display: inline">
+              <input type="hidden" value="{{city.city}}" size="25" style="color:#502035" name="old_city">
+              <input type="text" value="{{city.city}}" size="25" style="color:#502035" name="new_city">
+              <input type="submit" class="b2" value="Обновити">
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="./delete_city" style="display: inline">
+              <input type="hidden" value="{{city.id}}" name="id">
+              <input type="submit" class="b2" value="Видалити">
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+        
+    </table>
+  </body>
+</html>

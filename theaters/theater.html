@@ -1,0 +1,109 @@
+<html>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/creative.css') }}">
+  <body style="background-color:#e9e7ea;">
+  <body>
+   <style>
+   h1 {
+    font-family: 'Times New Roman', Times, serif; 
+    font-size: 300%; 
+   } 
+  </style>
+    <h1 align="center" style="color:#3c1731;" > Театри</h1>
+      </td>
+      <nav>
+         <h3> <a href = "{{ url_for('city') }}" style="color:#B2729E;"> Місто 
+         </a> |  <a href = "{{ url_for('performance') }}" style="color:#B2729E;"> Вистави    
+         </a> | <a href = "{{ url_for('genre') }}" style="color:#B2729E;"> Жанри  
+      
+         </a></h3>
+       </nav>
+      <h2 style="color:#502035" class="body"> Добавити театр</h2>
+    <style>
+   .b1 {
+    background: #502035; 
+    color: #fbf8f8; 
+    font-size: 15px;
+    transition: opacity .8s .8s;
+    width: 80px;
+    height: 40px;
+        }
+    .b2 {
+    background: #6F5775; 
+    color: #fbf8f8; 
+    font-size: 15px;
+    transition: opacity .8s .8s;
+    width: 80px;
+    height: 40px;
+        }
+    .body { 
+    margin-left: 50px; /* Убираем отступы */
+   }
+    .body2 { 
+    margin-right: 100px; /* Убираем отступы */
+   }
+  </style>
+      <form method="POST" action="/theater">
+        
+        <input type="text" name="name" placeholder = "Назва"  class="body" size="25" style="color:#502035">
+        <input type="text" name="address" placeholder = "Адреса" size="25" style="color:#502035">
+        <span class="input-group-addon" style="color:#502035">Номер міста</span>
+        <select type="number" name="city_id" class="selectpicker form-control" style="color:#502035">
+              {% for c in cities_id %}
+              <option value="{{ c.id }}">{{ c.id }}</option>
+              {% endfor %}
+        </select>
+        <input type="text" name="description" placeholder = "Опис" size="25" style="color:#502035"> 
+        <input type="submit" class="b1" value="Добавити" size="40"  >
+      </form>
+      </form>
+      <form method="GET" action="/theater" class="body2">
+        <input type="text" name="search" placeholder = "Введіть текст"   size="15" style="color:#502035">
+        <input type="submit" class="Шукати" value="Пошук" size="25"  >
+       
+      </form>
+     
+       
+        
+<h2 style="color:#354C68;">Театри</h2>
+    <table border="2" bordercolor="#354C68" width="90%">
+      {% for theater in theaters %}
+        <tr>
+          <td>
+            {{theater.id}}
+          </td>
+          <td>
+            {{theater.name}}
+          </td>
+          <td>
+            {{theater.address}}
+           </td>
+           <td>
+            {{theater.city_id}}
+           </td>
+           <td>
+            {{theater.description}}
+          </td>
+          <td>
+            <form method="POST" action="./update_theater" style="display: inline">
+              <input type="hidden" value="{{theater.name}}" size="25" style="color:#502035" name="old_name">
+              <input type="text" value="{{theater.name}}" size="25" style="color:#502035" name="new_name">
+              <input type="hidden" value="{{theater.address}}" size="25" style="color:#502035" name="old_address">
+              <input type="text" value="{{theater.address}}" size="25" style="color:#502035" name="new_address">
+              <input type="hidden" value="{{theater.city_id}}" min="1" size="25" style="color:#502035" name="old_city">
+              <input type="text" value="{{theater.city_id}}" size="25" min="1" style="color:#502035" name="new_city">
+              <input type="hidden" value="{{theater.description}}" size="25" style="color:#502035" name="old_description">
+              <input type="text" value="{{theater.description}}" size="25" style="color:#502035" name="new_description">
+              <input type="submit" class="b2" value="Оновити">
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="./delete_theater" style="display: inline">
+              <input type="hidden" value="{{theater.id}}" name="id">
+              <input type="submit" class="b2" value="Видалити">
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
